@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='Python-DRL',
-    version='1.0.0',
+    version='1.0.1',
     packages=find_packages(),
     description='A pytorch-based deep reinforcement learning package',
     long_description=open('README.md').read(),
