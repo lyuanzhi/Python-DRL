@@ -2,6 +2,7 @@ from DRL.ppo import PPO
 from DRL.pg import PG
 from DRL.dqn import DQN
 import gym
+import argparse
 
 env = gym.make('CartPole-v1')
 
@@ -61,10 +62,12 @@ def test(type):
                 break
         print("# avg score : {:.1f}".format(ep_r))
 
-if __name__ == "__main__":
-    mode = "train"
-    type = "DQN"
-    if mode == "train":
-        train(type)
-    else:
-        test(type)
+parser = argparse.ArgumentParser()
+parser.add_argument('-m', '--mode', required=True, type=str, help='"train" or "test"')
+parser.add_argument('-t', '--type', required=True, type=str, help='"DQN" or "PPO" or "PG"')
+args = parser.parse_args()
+
+if args.mode == "train":
+    train(args.type)
+else:
+    test(args.type)
