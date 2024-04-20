@@ -97,9 +97,9 @@ class PPO(object):
     def learn(self):
         s_lst, a_lst, r_lst, done_lst, prob_a_lst = self.make_batch()
 
-        s = torch.tensor(s_lst, dtype=torch.float).to(self.device)
-        a = torch.tensor(a_lst).long().to(self.device)
-        prob_a = torch.tensor(prob_a_lst, dtype=torch.float).to(self.device)
+        s = torch.tensor(np.array(s_lst), dtype=torch.float).to(self.device)
+        a = torch.tensor(np.array(a_lst)).long().to(self.device)
+        prob_a = torch.tensor(np.array(prob_a_lst), dtype=torch.float).to(self.device)
 
         for i in range(self.learn_epochs):
             rewards = []
