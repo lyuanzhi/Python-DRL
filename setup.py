@@ -11,7 +11,7 @@ setup(
     author_email='lyuanzhi862066195@outlook.com',
     url='https://github.com/lyuanzhi/Python-DRL',
     install_requires=[
-        'numpy<=1.24.0',
+        'numpy~=1.23.0',
         'torch>=2.0.1',
         'gym~=0.26.2',
         'opencv-python>=4.5.5.62'
