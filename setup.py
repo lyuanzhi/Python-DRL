@@ -14,7 +14,8 @@ setup(
         'numpy~=1.23.0',
         'torch>=2.0.1',
         'gym~=0.26.2',
-        'opencv-python>=4.5.5.62'
+        'opencv-python>=4.5.5.62',
+        'pygame~=2.5.2'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

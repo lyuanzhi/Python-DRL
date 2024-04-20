@@ -7,6 +7,7 @@ numpy~=1.23.0
 torch>=2.0.1
 gym~=0.26.2
 opencv-python>=4.5.5.62
+pygame~=2.5.2
 ```
 
 ## Supported Python Versions
@@ -26,6 +27,7 @@ pip install Python-DRL
 python ./examples/cartpole-demo.py -m [train/test] -t [DQN/PPO/PG]
 python ./examples/pendulum-demo.py -m [train/test] -t [DDPG/TD3/SAC]
 ```
+##### Note that ```examples``` will not be installed by ```pip install Python-DRL```.
 
 ## Detailed Usage Guide
 ### DQN
