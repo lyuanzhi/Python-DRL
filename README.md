@@ -74,4 +74,6 @@ SAC(n_states, n_actions, max_action, hidden_dim=300, actor_lr=3e-3, critic_lr=3e
 
 ## Updates Log
 - 1.0.0
-  - implemented DQN, PG, PPO, DDPG, TD3, and SAC
+  - implemented DQN, PG, PPO, DDPG, TD3, and SAC (missing pygame)
+- 1.0.1
+  - add pygame dependency
