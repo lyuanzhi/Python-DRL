@@ -44,4 +44,5 @@ def train(type):
             ep_r = 0
     agent.save()
 
-train("DDPG")
+def test_train():
+    train("DDPG")
