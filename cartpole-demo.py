@@ -3,37 +3,34 @@ from DRL.pg import PG
 from DRL.dqn import DQN
 import gym
 import argparse
+import cv2
 
-env = gym.make('CartPole-v1')
-
+env = gym.make('CartPole-v1', render_mode = "rgb_array")
+EPOCH = 400
 N_STATES = env.observation_space.shape[0]
 N_ACTIONS = env.action_space.n
 
 def train(type):
     if type == "DQN":
-        EPOCH = 200
         agent = DQN(N_STATES, N_ACTIONS)
     if type == "PPO":
-        EPOCH = 200
         agent = PPO(N_STATES, N_ACTIONS)
     if type == "PG":
-        EPOCH = 800
         agent = PG(N_STATES, N_ACTIONS)
     ep_r = 0
     for i in range(EPOCH):
-        s = env.reset()
+        s = env.reset()[0]
         while True:
             a = agent.select_action(s)
-            s_, r, d, _ = env.step(a)
+            s_, r, d, trunc, _ = env.step(a)
             if type == "DQN":
                 r = (env.theta_threshold_radians - abs(s_[2])) / env.theta_threshold_radians * 0.7 + (env.x_threshold - abs(s_[0])) / env.x_threshold * 0.3
             agent.store_data(s, a, r, s_, d)
-            # env.render()
             s = s_
             ep_r += r
             if type == "DQN":
                 agent.learn()
-            if d:
+            if d or trunc:
                 break
         if type == "PPO" or type == "PG":
             agent.learn()
@@ -50,12 +47,14 @@ def test(type):
     if type == "PG":
         agent = PG(N_STATES, N_ACTIONS, is_train=False, is_load=True)
     while True:
-        s = env.reset()
+        s = env.reset()[0]
         ep_r = 0
         while True:
             a = agent.select_action(s)
-            s_, r, d, _ = env.step(a)
-            env.render()
+            s_, r, d, trunc, _ = env.step(a)
+            img = cv2.cvtColor(env.render(), cv2.COLOR_RGB2BGR)
+            cv2.imshow("test",img)
+            cv2.waitKey(1)
             s = s_
             ep_r += r
             if d:

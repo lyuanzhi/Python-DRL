@@ -51,6 +51,7 @@ class PPO(object):
         self.eps = np.finfo(np.float32).eps.item()
         self.data = []
         self.oneTimeProb = 0
+        self.is_train = is_train
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
@@ -68,6 +69,8 @@ class PPO(object):
         with torch.no_grad():
             s = torch.FloatTensor(s).to(self.device)
             prob = self.actor(s, softmax_dim=0)
+            if not self.is_train:
+                return torch.argmax(prob).data.cpu().numpy()
             m = Categorical(prob)
             a = m.sample()
             a = a.item()

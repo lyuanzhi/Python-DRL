@@ -26,6 +26,7 @@ class PG(object):
         self.gamma = gamma
         self.saved_log_probs = []
         self.rewards = []
+        self.is_train = is_train
         self.eps = np.finfo(np.float32).eps.item()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         if torch.cuda.is_available():
@@ -40,6 +41,8 @@ class PG(object):
     def select_action(self, state):
         state = torch.unsqueeze(torch.FloatTensor(state).to(self.device), 0)
         probs = self.actor(state)
+        if not self.is_train:
+            return torch.argmax(probs).data.cpu().numpy()
         m = Categorical(probs)
         action = m.sample()
         self.saved_log_probs.append(m.log_prob(action))
